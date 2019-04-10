@@ -19,3 +19,9 @@ When analyzing your dataset keep in mind that if your raw read is similar enough
 There are a number of public resources for microbiome bioinformatics benchmarking using artificially constructed (i.e., mock) communities. The one that we will use in this tutorial will be a subset of the [ZymoBiomics Mock Community](https://www.zymoresearch.com/blogs/blog/zymobiomics-microbial-standards-optimize-your-microbiomics-workflow). 
 
 
+# Shotgun Metagenomic Basic Workflow
+
+1. Quality Control
+As the old saying goes 'Garbage in garbage out'. This saying applies to a lot of things including shotgun metagenomic reads. Remeber that your are classifying reads based on their similarity to other known reads in your reference database. If your reads are too short they will align to a lot of different genomes, if there is too much error (lowe sequencing quality) you will make too many erronious alignments or non at all. These errors will can cause problems will become more apparent as you start analyzing your data anx come to find elephant virus exist in your mouth! OMG!
+
+You should check the quality of your data  with programs such as [FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/). This is an easy drag and drop approach and you will get an html output like this one here
