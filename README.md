@@ -7,6 +7,6 @@ DNA sequencing has revolutionized microbial ecology. There are two orthogonal ap
 Data analysis pipelines will always follow a pretty standard workflow. Once you understand this, then you will be able to apply these same ideas to other omics technologies using a different set of tools. 
 
 
-                                           -> Assembly -> Taxonomic and functional annotation                                      
-Raw data -> Quality check -> Preprocessing                                                      -> Data visualizaiton -> Analysis
-                                           -> Taxonomic and functional annotation
+<p align="center">
+ <img src="./figures/workflow.jpg" width="800">
+</p>
