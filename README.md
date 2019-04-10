@@ -10,3 +10,11 @@ Data analysis pipelines will always follow a pretty standard workflow. Once you 
 <p align="center">
  <img src="./figures/workflow.jpg" width="800">
 </p>
+
+## Mock Communities
+When analyzing your dataset keep in mind that if your raw reads is similar enough to anything in your reference reads then it will align to that; however, you should always be skeptical of your output if you have not done the proper optimization of your pipeline. You are the bioinformatician and you need to be comfortable and confident in your pipeline. Sometimes you will just inset your raw reads to an online repository and press a button and you will get an output. How did they get that output, what were their parameters, their cutoffs, how confident are you in their results? Sometimes you will have to create your own pipeline and there will not be a solid blueprint - you are now the trailblazer. So how can we be confident that we are going in the right direction? The simplest answer righ now is understand what parameters you used and why (do not leave everything in the default setting) and use a mock community.
+
+To assess the performance of different microbiome workflows, there is an urgent need in the field for reliable reference materials, e.g. a mock microbial community with defined composition. There are a number of public resources for microbiome bioinformatics benchmarking using artificially constructed (i.e., mock) communities. The one that we will use in this tutorial will be a subset of the [ZymoBiomics Mock Community](https://www.zymoresearch.com/blogs/blog/zymobiomics-microbial-standards-optimize-your-microbiomics-workflow).
+
+
+For this tutorial we will be using a small subset of the ZymoBiomics community standard.
