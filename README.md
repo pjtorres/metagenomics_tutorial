@@ -38,7 +38,8 @@ Programs you can use include [Trimmomatic](http://www.usadellab.org/cms/?page=tr
 
 a. Lets build our [Docker Image](https://www.docker.com/)
  
-```bash
+```
+bash
 docker build -t metagenomics .
 ```
 
