@@ -36,3 +36,97 @@ On top of that you will also need to preprocess your reads. This means you need 
 
 Programs you can use include [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic), [TagCleaner](http://tagcleaner.sourceforge.net/), [prinseq++](https://github.com/Adrian-Cantu/PRINSEQ-plus-plus). Today we will use [fastp](https://github.com/OpenGene/fastp) which allows you to kill two birds with one stone:1. check quality of data and 2. preprocess your reads! 
 
+a. Lets build our [Docker Image](https://www.docker.com/)
+ 
+```bash
+docker build -t metagenomics .
+```
+
+Make sure it works
+```
+bash
+docker run -v `pwd`:`pwd` -w `pwd` metagenomics fastp --help
+```
+b. build a new directory to help keep things organied. Your futture self will thank you!
+```bash
+mkdir 1_QC
+```
+c. Run fastp
+```bash
+docker run -v `pwd`:`pwd` -w `pwd` metagenomics fastp \
+     -i mock_community/insub732_2_R1.fastq.gz \
+     -I mock_community/insub732_2_R2.fastq.gz \
+     -o 1_QC/insub732_2_R1_fastp.fastq.gz \
+     -O 1_QC/insub732_2_R2.fastp.fastq.gz \
+     --detect_adapter_for_pe --length_required 60 --html 1_QC/insub732_2.fastp.html
+```
+### 1. Remove host contamination 
+Removing host (contamination) sequences is important to analyze the renaming (non-host) sequences. This is important step needed especially if you are planning of building contigs or submitting human data to a public repository like the SRA. We will use a variety of popular tools to do this including bowtie2, samtools, and bedtools. **Big thank you to Bryan Ho for doing this**
+
+a. Someone already build the docker images yay! We can go ahead and pull the [bowtie2](https://hub.docker.com/r/biocontainers/bowtie2/), the [samtools](https://hub.docker.com/r/biocontainers/samtools/) and [bedtools](https://hub.docker.com/r/biocontainers/bedtools)pre-made image form the docker repository 
+
+```bash
+docker pull biocontainers/bowtie2:v2.2.9_cv2
+
+docker pull biocontainers/samtools:v1.2_cv3
+
+docker pull biocontainers/bedtools:v2.25.0_cv3
+```
+
+For this tutorial I will use a small sample of the human reference genome to align our reads against. You can change this to whatever organism it is that you are interested in (mouse, rat, fish, virus, ect.). You can download some pre-indexed ones from the [bowtie2 website](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml) or download your own. We will build our own small one right now.
+
+b. Make appropriate directories for later and download human reference
+```bash
+mkdir refdb
+mkdir 2_Decontam
+```
+
+```bash
+ wget ftp://hgdownload.cse.ucsc.edu/goldenPath/hg19/chromosomes/chr19.fa.gz
+```
+
+```bash
+mv chr19.fa.gz refdb/
+unzip refdb/chr19.fa.gz
+```
+c. Index reference genome
+```bash
+docker run -v `pwd`:`pwd` -w `pwd` biocontainers/bowtie2:v2.2.9_cv2 bowtie2-build refdb/chr19.fa refdb/human19
+```
+Run the following to check if it was build properly. You should not get any errors:
+```bash
+docker run -v `pwd`:`pwd` -w `pwd` biocontainers/bowtie2:v2.2.9_cv2 bowtie2-inspect -s refdb/human19
+```
+d. Align your reads to the reference database
+```bash
+docker run -v `pwd`:`pwd` -w `pwd` biocontainers/bowtie2:v2.2.9_cv2 bowtie2 -x refdb/human19 -1 1_QC/insub732_2_R1_fastp.fastq.gz -2 1_QC/insub732_2_R2.fastp.fastq.gz -S 2_Decontam/insub732_mapped_and_unmapped.sam
+```
+
+e. Samtools to convert sam to bam. 
+To do anything meaningful with alignment data from BWA or other aligners (which produce text-based SAM output), we need to first convert the SAM to its binary counterpart, BAM format. The binary format is much easier for computer programs to work with. However, it is consequently very difficult for humans to read. More on that later.
+
+To convert SAM to BAM, we use the samtools view command. We must specify that our input is in SAM format (by default it expects BAM) using the -S option. We must also say that we want the output to be BAM (by default it produces BAM) with the -b option. Samtools follows the UNIX convention of sending its output to the UNIX STDOUT, so we need to use a redirect operator (“>”) to create a BAM file from the output.
+
+
+```bash
+docker run -v `pwd`:`pwd` -w `pwd` biocontainers/samtools:v1.2_cv3 samtools view -bS 2_Decontam/insub732_mapped_and_unmapped.sam > 2_Decontam/insub732_mapped_and_unmapped.bam
+```
+
+f. Extract out the unmapped reads against the mouse genome (don't want mapped, those are host genome contamination) only want reads that are both ends unmapped. [Both reads of the pair are unmapped](http://seqanswers.com/forums/showthread.php?t=12283)
+
+```bash
+docker run -v `pwd`:`pwd` -w `pwd` biocontainers/samtools:v1.2_cv3 samtools view -b -f 12 -F 256 2_Decontam/insub732_mapped_and_unmapped.bam > 2_Decontam/insub732_NA_human.bam
+```
+
+g. Before we convert the bam file to fastq we must sort the file such that the alignments occur in “genome order”. That is, ordered positionally based upon their alignment coordinates on each chromosome.
+
+```bash
+docker run -v `pwd`:`pwd` -w `pwd` biocontainers/samtools:v1.2_cv3 samtools sort  2_Decontam/insub732_NA_human.bam   2_Decontam/insub732_NA_human_sorted
+```
+e. Se will now convert the bam file to fastq. bedtools bamtofastq is a conversion utility for extracting FASTQ records from sequence alignments in BAM format.
+
+```bash
+docker run -v `pwd`:`pwd` -w `pwd` biocontainers/bedtools:v2.25.0_cv3 bedtools bamtofastq -i 2_Decontam/insub732_NA_human_sorted.bam -fq 2_Decontam/insub732_R1_NA_human_sorted.fastq -fq2 2_Decontam/insub732_R2_NA_human_sorted.fastq 
+```
+
+3. Taxonomic Classificaiton
