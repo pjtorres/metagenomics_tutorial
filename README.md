@@ -38,14 +38,13 @@ Programs you can use include [Trimmomatic](http://www.usadellab.org/cms/?page=tr
 
 a. Lets build our [Docker Image](https://www.docker.com/)
  
-```
-bash
+```bash
 docker build -t metagenomics .
 ```
 
+
 Make sure it works
-```
-bash
+```bash
 docker run -v `pwd`:`pwd` -w `pwd` metagenomics fastp --help
 ```
 b. build a new directory to help keep things organied. Your futture self will thank you!
