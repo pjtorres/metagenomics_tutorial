@@ -130,6 +130,21 @@ docker run -v `pwd`:`pwd` -w `pwd` biocontainers/bedtools:v2.25.0_cv3 bedtools b
 ```
 
 3. Taxonomic Classificaiton
+There are a number of classification progrmas out there: [centrifuge](https://ccb.jhu.edu/software/centrifuge/) [kraken](https://ccb.jhu.edu/software/kraken/), [kaiju](http://kaiju.binf.ku.dk/), [mOTU](https://omictools.com/motu-tool), [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi), [FOCUS](https://github.com/metageni/FOCUS) ... you get the picture. There are a lot! It is up to you to decide what works best for your given dataset. I am a fan of centrifuge, but there is alot of processing invovled in order to make it human readable. For the sake of this tutorial I will use [metaphlan2](https://bitbucket.org/biobakery/metaphlan2). T
+
+a. Once again let us use a someone elses docker image :)
+```bash
+docker pull qhmu/metaphlan2
+```
+This time I will show you how you can go inside of the docker container so that we do not have to type ```docker run -v `pwd`:`pwd` -w `pwd` ``` everytime you want to run something
+
+```bash
+sudo docker run -v `pwd`:`pwd` -w `pwd` -it  qhmu/metaphlan2-docker:latest 
+```
+You should see something like ```root@af273de96f4a:/home/ubuntu#``` . This means you are in. 
+
+Type ```metaphlan2.py``` to test it.
+
 
 
 ## Extra
