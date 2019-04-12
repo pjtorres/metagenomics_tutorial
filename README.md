@@ -30,7 +30,7 @@ python setup.py
 
 As the old saying goes 'Garbage in garbage out'. This saying applies to a lot of things including shotgun metagenomic reads. Remember that your are classifying reads based on their similarity to other known reads in your reference database. If your reads are too short they will align to a lot of different genomes, if there is too much error (low sequencing quality) you will make too many erroneous alignments or non at all. These errors will can cause problems will become more apparent as you start analyzing your data and come to find elephant virus exist in your mouth! OMG!
 
-You should check the quality of your data  with programs such as [FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/). This is an easy drag and drop approach and you will get an html output. You can see and example of it in  ```mock_community/insub732_2_R1_fastqc.html```.
+You should check the quality of your data  with programs such as [FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/). This is an easy drag and drop approach and you will get an html output. You can see and example of it in  ```mock_community/fastqc_report.html```.
 
 This is great but imagine having to do this for 100 files, oy vey!
 
