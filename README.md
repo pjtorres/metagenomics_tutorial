@@ -33,7 +33,7 @@ To assess the performance of different microbiome workflows, there is an urgent 
 
 When analyzing your dataset keep in mind that if your raw read is similar enough to anything in your reference database and your alignment parameters are 'loose' enough then it will align to that; however, you should always be skeptical of your output if you have not done the proper optimization of have a full understanding of your pipeline is doing. You are the bioinformatician and you need to be comfortable and confident in your pipeline. Sometimes you will just insert your raw reads to an online repository and press a button and you will get an output. How did they get that output, what were their parameters, their cutoffs, how confident are you in their results? Sometimes you will have to create your own pipeline and there will not be a solid blueprint - you are now the trailblazer and bioinformatician. So how can we be confident that we are going in the right direction? The simplest answer right now is understand what parameters you used and why (yes this means actually reading the papers pertaining to a given tool and figuring out if the default parameters are your best choice) and test your pipeline using a mock community.
 
-There are a number of public resources for microbiome bioinformatics benchmarking using artificially constructed (i.e., mock) communities. The one that we will use in this tutorial will be a subset of the [ZymoBiomics Mock Community](https://www.zymoresearch.com/blogs/blog/zymobiomics-microbial-standards-optimize-your-microbiomics-workflow). 
+There are a number of public resources for microbiome bioinformatics benchmarking using artificially constructed (i.e., mock) communities. The one that we will use in this tutorial will be a subset of the [ZymoBiomics Mock Community](https://www.zymoresearch.com/blogs/blog/zymobiomics-microbial-standards-optimize-your-microbiomics-workflow) (250K reads). 
 
 
 # Shotgun Metagenomic Basic Workflow
@@ -142,6 +142,7 @@ f. Extract out the unmapped reads against the mouse genome (don't want mapped, t
 ```bash
 docker run -v `pwd`:`pwd` -w `pwd` biocontainers/samtools:v1.2_cv3 samtools view -b -f 12 -F 256 2_Decontam/insub732_mapped_and_unmapped.bam > 2_Decontam/insub732_NA_human.bam
 ```
+This is a simple tutorial so you will not get any alignments to the human genome (we are using a microbial mock community!). Thats ok, you get the idea and can now do this with your own data.
 
 g. Before we convert the bam file to fastq we must sort the file such that the alignments occur in “genome order”. That is, ordered positionally based upon their alignment coordinates on each chromosome.
 
@@ -153,6 +154,7 @@ e. Se will now convert the bam file to fastq. bedtools bamtofastq is a conversio
 ```bash
 docker run -v `pwd`:`pwd` -w `pwd` biocontainers/bedtools:v2.25.0_cv3 bedtools bamtofastq -i 2_Decontam/insub732_NA_human_sorted.bam -fq 2_Decontam/insub732_R1_NA_human_sorted.fastq -fq2 2_Decontam/insub732_R2_NA_human_sorted.fastq 
 ```
+
 ### 3. Taxonomic Classification
 
 There are a number of classification programs out there: [centrifuge](https://ccb.jhu.edu/software/centrifuge/) [kraken](https://ccb.jhu.edu/software/kraken/), [kaiju](http://kaiju.binf.ku.dk/), [mOTU](https://omictools.com/motu-tool), [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi), [FOCUS](https://github.com/metageni/FOCUS) ... you get the picture. There are a lot! It is up to you to decide what works best for your given dataset. I am a fan of centrifuge, but there is a lot of processing involved in order to make it human readable. For the sake of this tutorial I will use [metaphlan2](https://bitbucket.org/biobakery/metaphlan2).
@@ -202,7 +204,10 @@ metaphlan2.py mock_community/insub732_2_R1.fastq.gz,mock_community/insub732_2_R2
 e. Now lets take a look at what we have created!
 ```head 3_Taxa/in745.Taxa.txt ```
 
-Docker images took up a lot of data lets go ahead and remove everything. 
+Check to make sure the taxa it identified are taxa that are suppose to be present in the [mock community](https://github.com/pjtorres/metagenomics_tutorial/blob/master/mock_community/ZymoBIOMICS%20Microbial%20Community%20Standard%20I%20(Even%2C%20DNA%20mix).pdf). Remember that this tutorial uses a subset of the ZymoBiomics Mock community so you will not see all the same taxa or abundance, but whatever you do have present should be in the Mock Community.
+
+Once done you can exit the Docker image instance you are in. Docker images took up a lot of data lets go ahead and remove everything. 
+
 ```bash
 docker container stop $(docker container ls -aq)
 
