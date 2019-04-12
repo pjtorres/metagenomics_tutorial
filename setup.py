@@ -8,7 +8,7 @@ import string
 # Script prepares your current environemnt for the metagenomics_tutorial found in
 # https://github.com/pjtorres/metagenomics_tutorial
 
-#------ check to make sure you are in the right directory ----------------------------
+#------ Check to make sure you are in the right directory ----------------------------
 cwd=os.getcwd()
 wd=cwd.split('/')[-1]
 if wd != 'metagenomics_tutorial':
@@ -22,7 +22,7 @@ output,err=x.communicate()
 if re.search('Docker version', output):
     print('Docker is properly installed.')
 else:
-    print('Docker is not installed or is not being called by your environment. Fix this then retry this script.')
+    print('Docker is not installed or is not being called by your environment. Do you see an output when you type "docker -v" ? Fix this then retry this script.')
 
 #-------------- Set up fastp environment ---------------------------------------
 print('Building fastp docker image')
@@ -47,7 +47,7 @@ bedtools='docker pull biocontainers/bedtools:v2.25.0_cv3'
 subprocess.call(bedtools, shell=True)
 
 #-------------- get human reference database and start organizing everything ----------------
-print('Making refdb and downloading small human fna')
+print('Making refdb folder to keep the small human reference fnafile we will be using later')
 ref='mkdir refdb'
 subprocess.call(ref, shell=True)
 ref='mkdir 2_Decontam'
@@ -69,8 +69,6 @@ subprocess.call(metaphlan2, shell=True)
 metaphlan2='mkdir 3_Taxa/'
 subprocess.call(metaphlan2, shell=True)
 
-
-
-print('Set up done successfully! :)')
+print('Set up done successfully! :)' +'\n' )
 print('Before starting the tutorial go start downloading the metaphlan reference database from https://drive.google.com/drive/u/0/folders/1eWR6tgUoAUNXWsFujyLU5VNUzNMfxhDm  ')
 print('Ready to start the metagenomics tutorial! :)')
