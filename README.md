@@ -136,15 +136,26 @@ a. Once again let us use a someone elses docker image :)
 ```bash
 docker pull qhmu/metaphlan2
 ```
-This time I will show you how you can go inside of the docker container so that we do not have to type ```docker run -v `pwd`:`pwd` -w `pwd` ``` everytime you want to run something
+This time I will show you how you can go inside of the docker container so that we do not have to type ```docker run -v `pwd`:`pwd` -w `pwd` ``` everytime you want to run something. 
 
 ```bash
 sudo docker run -v `pwd`:`pwd` -w `pwd` -it  qhmu/metaphlan2-docker:latest 
 ```
-You should see something like ```root@af273de96f4a:/home/ubuntu#``` . This means you are in. 
+-i interactive
+-t terminal
+
+You should see something like ```root@af273de96f4a:/home/ubuntu#``` . This means you are running docker interactively on your computer now.
 
 Type ```metaphlan2.py``` to test it.
 
+Run with paired end reads
+```bash
+metaphlan2.py subset_in745_2_R1.fastq.gz,subset_in745_2_R2.fastq.gz \
+              --bowtie2out subset_in745.bowtie2.bz2 \
+              --mpa_pkl db_v20/mpa_v20_m200.pkl \
+              --bowtie2db db_v20/mpa_v20_m200 \
+              --input_type fastq 
+```
 
 
 ## Extra
