@@ -1,3 +1,11 @@
+Before getting started make sure you have cloned this repository and you are in the meategomics_tutorial directory. Then run setup.py and start downloading the metaphlan reference database [here](https://drive.google.com/drive/u/0/folders/1eWR6tgUoAUNXWsFujyLU5VNUzNMfxhDm)
+```bash
+git clone https://github.com/pjtorres/metagenomics_tutorial.git
+cd metagenomics_tutorial
+python setup.py
+```
+
+
 DNA sequencing has revolutionized microbial ecology. There are two orthogonal approaches commonly used to explore the microbial universe: amplicon where a part of a single gene (usually the 16S rRNA gene) is amplified and sequenced and untargeted (“shotgun”) sequencing of all (“meta”) microbial genomes (“genomics”) where all the DNA is extracted and sequenced. 
 
 16S rRNA | Pro | Con | Shotgun Metagenomics | Pro | Con
@@ -28,11 +36,6 @@ There are a number of public resources for microbiome bioinformatics benchmarkin
 
 
 # Shotgun Metagenomic Basic Workflow
-```bash
-git clone https://github.com/pjtorres/metagenomics_tutorial.git
-
-python setup.py
-```
 
 ### 1. Quality Control
 
@@ -160,7 +163,7 @@ docker pull qhmu/metaphlan2
 b. This time I will show you how you can go inside of the docker container so that we do not have to type ```docker run -v `pwd`:`pwd` -w `pwd` ``` every time you want to run something. 
 
 ```bash
-sudo docker run -v `pwd`:`pwd` -w `pwd` -it  qhmu/metaphlan2-docker:latest 
+docker run -v `pwd`:`pwd` -w `pwd` -it  qhmu/metaphlan2
 ```
 -i interactive
 
