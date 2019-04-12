@@ -185,11 +185,7 @@ mv  db_v20/ metaphlan2/
 
 d. Run metaphlan
 ```bash
-metaphlan2.py mock_community/insub732_2_R1.fastq.gz,mock_community/insub732_2_R2.fastq.gz \
-               --bowtie2out subset_in745.bowtie2.bz2 \
-               --mpa_pkl metaphlan2/db_v20/mpa_v20_m200.pkl \
-               --bowtie2db metaphlan2/db_v20/mpa_v20_m200 \
-               --input_type fastq --nproc 8 > 3_Taxa/in745.Taxa.txt
+metaphlan2.py mock_community/insub732_2_R1.fastq.gz,mock_community/insub732_2_R2.fastq.gz --bowtie2out subset_in745.bowtie2.bz2 --mpa_pkl metaphlan2/db_v20/mpa_v20_m200.pkl --bowtie2db metaphlan2/db_v20/mpa_v20_m200 --input_type fastq --nproc 8 > 3_Taxa/in745.Taxa.txt
 ```
 
 e. Now lets take a look at what we have created!
