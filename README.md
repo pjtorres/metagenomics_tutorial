@@ -4,6 +4,7 @@ git clone https://github.com/pjtorres/metagenomics_tutorial.git
 cd metagenomics_tutorial
 python setup.py
 ```
+[Start Here](https://github.com/pjtorres/metagenomics_tutorial/blob/master/Docker.md)
 
 DNA sequencing has revolutionized microbial ecology. There are two orthogonal approaches commonly used to explore the microbial universe: amplicon where a part of a single gene (usually the 16S rRNA gene) is amplified and sequenced and untargeted (“shotgun”) sequencing of all (“meta”) microbial genomes (“genomics”) where all the DNA is extracted and sequenced. 
 
