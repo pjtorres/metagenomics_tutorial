@@ -148,6 +148,7 @@ You should see something like ```root@af273de96f4a:/home/ubuntu#``` . This means
 
 Type ```metaphlan2.py``` to test it.
 
+Go into 
 Run with paired end reads
 ```bash
 metaphlan2.py subset_in745_2_R1.fastq.gz,subset_in745_2_R2.fastq.gz \
