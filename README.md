@@ -173,6 +173,16 @@ metaphlan2.py \
 e. Now lets take a look at what we have created!
 ```head 3_Taxa/in745.Taxa.txt ```
 
+Docker images took up a lot of data lets go ahead and remove everything. 
+```bash
+docker container stop $(docker container ls -aq)
+
+docker container rm $(docker container ls -aq)
+
+docker image prune -a 
+```
+
+More information on the removal of Docker containers and images can be found [here](https://linuxize.com/post/how-to-remove-docker-images-containers-volumes-and-networks/)
 ## Extra
 What is Docker ?
 Docker is a containerization platform that packages your application and all its dependencies together in the form of a docker container to ensure that your application works seamlessly in any environment.
