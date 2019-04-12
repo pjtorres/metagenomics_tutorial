@@ -87,7 +87,7 @@ mkdir 2_Decontam
 
 ```bash
 mv chr19.fa.gz refdb/
-unzip refdb/chr19.fa.gz
+gunzip refdb/chr19.fa.gz
 ```
 c. Index reference genome
 ```bash
