@@ -148,14 +148,17 @@ You should see something like ```root@af273de96f4a:/home/ubuntu#``` . This means
 
 Type ```metaphlan2.py``` to test it.
 
-Go into 
+Now in the interest of time. I have built and formated the metaphlan2 database. Jsut downlaod it.
+
+```wget https://drive.google.com/open?id=1iDAIaZuzefUisO1CAJ-_cBgpIiTgapEt```
 Run with paired end reads
 ```bash
-metaphlan2.py subset_in745_2_R1.fastq.gz,subset_in745_2_R2.fastq.gz \
-              --bowtie2out subset_in745.bowtie2.bz2 \
-              --mpa_pkl db_v20/mpa_v20_m200.pkl \
-              --bowtie2db db_v20/mpa_v20_m200 \
-              --input_type fastq 
+metaphlan2.py \
+               mock_community/insub732_2_R1.fastq.gz,mock_community/insub732_2_R2.fastq.gz \
+               --bowtie2out subset_in745.bowtie2.bz2 \
+               --mpa_pkl metaphlan2/db_v20/mpa_v20_m200.pkl \
+               --bowtie2db metaphlan2/db_v20/mpa_v20_m200 \
+               --input_type fastq --nproc 8 > 3_Taxa/in745.Taxa.txt
 ```
 
 
