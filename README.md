@@ -184,8 +184,10 @@ You should see something like ```root@af273de96f4a:/home/ubuntu#``` . This means
 Type ```metaphlan2.py``` to test it.
 
 c. Now in the interest of time. I have built and formatted the metaphlan2 database. 
+
 i. Download it form here:
 ```https://drive.google.com/drive/u/0/folders/1eWR6tgUoAUNXWsFujyLU5VNUzNMfxhDm```
+
 ii. Then move that file to this directory
 ```mv db_v20.zip metagenomics_tutorial/```
 
