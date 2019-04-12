@@ -213,9 +213,9 @@ docker image prune -a
 More information on the removal of Docker containers and images can be found [here](https://linuxize.com/post/how-to-remove-docker-images-containers-volumes-and-networks/)
 
 ## Genome Assembly
-Another advantage with shotgun metagenomics is that you can take all your little pieces of sequenced DNA and stitch them together (assemble) forming longer continous pices of DNA (contigs). These longer pices can be long enough to reconstruct a genome or take your sequence reads from 100bp to 1000bp or more thus making your gene classificaiton more accurate. One very poplar tool is called [spades](http://spades.bioinf.spbau.ru/release3.11.1/manual.html)
+Another advantage of shotgun metagenomics is that you can take all your little pieces of sequenced DNA and stitch them together (assemble) forming longer continuous pieces of DNA (contigs). These longer pieces can be long enough to reconstruct a genome or take your sequence reads from 100bp to 1000bp or more thus making your gene classification more accurate. One very poplar tool is called [spades](http://spades.bioinf.spbau.ru/release3.11.1/manual.html) 
 
-SPAdes uses k-mers for building the initial de Bruijn graph and on following stages it performs graph-theoretical operations which are based on graph structure, coverage and sequence lengths. 
+SPAdes uses k-mers for building the initial de Bruijn graph and it performs graph-theoretical operations which are based on graph structure, coverage and sequence lengths. 
 
 
 The following is based on [this tutorial](https://hub.docker.com/r/pegi3s/spades/):
