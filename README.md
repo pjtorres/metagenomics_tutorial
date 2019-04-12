@@ -81,7 +81,6 @@ docker run -v `pwd`:`pwd` -w `pwd` metagenomics fastp \
      --detect_adapter_for_pe --length_required 60 --html 1_QC/insub732_2.fastp.html
 ```
 
--v 
 ### 2. Remove host contamination 
 Removing host (contamination) sequences is important to analyze the renaming (non-host) sequences. This is important step needed especially if you are planning of building contigs or submitting human data to a public repository like the SRA. We will use a variety of popular tools to do this including bowtie2, samtools, and bedtools. **Big thank you to Bryan Ho for doing this**
 
