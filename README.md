@@ -3,10 +3,10 @@ DNA sequencing has revolutionized microbial ecology. There are two orthogonal ap
 16S rRNA | Pro | Con | Shotgun Metagenomics | Pro | Con
 --- | --- | --- | --- | --- | ---
  --- | cheap | low taxonomic resolution | --- | finer taxonomic resolutionm | more expensive
- --- | rapid | only identifies bacteria |  --- | all kingdoms | low biomass requires more depth
- --- | deal with low biomass | who's there | --- | what are they doing | reads thrown away if not in database
+ --- | rapid | only identifies bacteria |  --- | all kingdoms | reads thrown away if not in database
+ --- | deal with low biomass | who's there | --- | what are they doing | low biomass requires more depth
  
- 
+
 
 <p align="center">
  <img src="./figures/shotgun.jpg" width="600">
