@@ -59,21 +59,23 @@ On top of that you will also need to preprocess your reads. Remember that your a
 
 Programs you can use include [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic), [TagCleaner](http://tagcleaner.sourceforge.net/), [prinseq++](https://github.com/Adrian-Cantu/PRINSEQ-plus-plus). Today we will use [fastp](https://github.com/OpenGene/fastp) which allows you to kill two birds with one stone:1. check quality of data and 2. preprocess your reads! 
 
-a. Lets build our [Docker Image](https://www.docker.com/)
+**Skip step a if you already ran the ```setup.py``` script in the begining**
+
+a. Lets build our [Docker Image](https://www.docker.com/) 
  
 ```bash
 docker build -t metagenomics .
 ```
-
-
-Make sure it works
-```bash
-docker run -v `pwd`:`pwd` -w `pwd` metagenomics fastp --help
-```
-b. build a new directory to help keep things organied. Your futture self will thank you!
+build a new directory to help keep things organied. Your future self will thank you!
 ```bash
 mkdir 1_QC
 ```
+
+b. Make sure it works
+```bash
+docker run -v `pwd`:`pwd` -w `pwd` metagenomics fastp --help
+```
+
 c. Run fastp
 ```bash
 docker run -v `pwd`:`pwd` -w `pwd` metagenomics fastp \
@@ -87,6 +89,7 @@ docker run -v `pwd`:`pwd` -w `pwd` metagenomics fastp \
 ### 2. Remove host contamination 
 Removing host (contamination) sequences is important to analyze the renaming (non-host) sequences. This is important step needed especially if you are planning of building contigs or submitting human data to a public repository like the SRA. We will use a variety of popular tools to do this including bowtie2, samtools, and bedtools. **Big thank you to Bryan Ho for doing this**
 
+**Skip step a and step b if you already ran the ```setup.py``` script in the begining**
 a. Someone already build the docker images yay! We can go ahead and pull the [bowtie2](https://hub.docker.com/r/biocontainers/bowtie2/), the [samtools](https://hub.docker.com/r/biocontainers/samtools/) and [bedtools](https://hub.docker.com/r/biocontainers/bedtools)pre-made image form the online docker repository  called [Docker Hub](https://hub.docker.com/).
 
 ```bash
@@ -131,7 +134,6 @@ To do anything meaningful with alignment data from BWA or other aligners (which 
 
 To convert SAM to BAM, we use the samtools view command. We must specify that our input is in SAM format (by default it expects BAM) using the -S option. We must also say that we want the output to be BAM (by default it produces BAM) with the -b option. Samtools follows the UNIX convention of sending its output to the UNIX STDOUT, so we need to use a redirect operator (“>”) to create a BAM file from the output.
 
-
 ```bash
 docker run -v `pwd`:`pwd` -w `pwd` biocontainers/samtools:v1.2_cv3 samtools view -bS 2_Decontam/insub732_mapped_and_unmapped.sam > 2_Decontam/insub732_mapped_and_unmapped.bam
 ```
@@ -156,10 +158,16 @@ docker run -v `pwd`:`pwd` -w `pwd` biocontainers/bedtools:v2.25.0_cv3 bedtools b
 
 There are a number of classification programs out there: [centrifuge](https://ccb.jhu.edu/software/centrifuge/) [kraken](https://ccb.jhu.edu/software/kraken/), [kaiju](http://kaiju.binf.ku.dk/), [mOTU](https://omictools.com/motu-tool), [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi), [FOCUS](https://github.com/metageni/FOCUS) ... you get the picture. There are a lot! It is up to you to decide what works best for your given dataset. I am a fan of centrifuge, but there is a lot of processing involved in order to make it human readable. For the sake of this tutorial I will use [metaphlan2](https://bitbucket.org/biobakery/metaphlan2).
 
+**Skip step a if you already ran the ```setup.py``` script in the begining**
 a. Once again let us use a someone elses docker image :)
 ```bash
 docker pull qhmu/metaphlan2
 ```
+make metaphlan2 directory to keep reference database for metaphlan
+```bash
+mkdir metaphlan2
+```
+
 b. This time I will show you how you can go inside of the docker container so that we do not have to type ```docker run -v `pwd`:`pwd` -w `pwd` ``` every time you want to run something. 
 
 ```bash
@@ -181,7 +189,6 @@ ii. Then move that file to this directory
 
 iii. unzip it and move to the metaphlan2 directory.
 ```bash
-mkdir metaphlan2
 unzip db_v20.zip
 mv  db_v20/ metaphlan2/
 ```
@@ -204,6 +211,43 @@ docker image prune -a
 ```
 
 More information on the removal of Docker containers and images can be found [here](https://linuxize.com/post/how-to-remove-docker-images-containers-volumes-and-networks/)
+
+## Genome Assembly
+Another advantage with shotgun metagenomics is that you can take all your little pieces of sequenced DNA and stitch them together (assemble) forming longer continous pices of DNA (contigs). These longer pices can be long enough to reconstruct a genome or take your sequence reads from 100bp to 1000bp or more thus making your gene classificaiton more accurate. One very poplar tool is called [spades](http://spades.bioinf.spbau.ru/release3.11.1/manual.html)
+
+SPAdes uses k-mers for building the initial de Bruijn graph and on following stages it performs graph-theoretical operations which are based on graph structure, coverage and sequence lengths. 
+
+
+The following is based on [this tutorial](https://hub.docker.com/r/pegi3s/spades/):
+
+a. Get spades docker image 
+```bash
+sudo docker pull pegi3s/spades
+```
+and test that it works
+```bash
+docker run --rm pegi3s/spades spades.py --help
+```
+
+b. To test SPAdes you can download these two E. coli FASTQ files from the [examples](http://cab.spbu.ru/software/spades/#examples):
+```bash
+wget http://spades.bioinf.spbau.ru/spades_test_datasets/ecoli_mc/s_6_1.fastq.gz
+
+wget http://spades.bioinf.spbau.ru/spades_test_datasets/ecoli_mc/s_6_2.fastq.gz
+```
+e. Run Spades
+```bash
+sudo docker run -v `pwd`:`pwd` -w `pwd` pegi3s/spades spades.py --careful \
+                  --only-assembler \
+                  --pe1-1 s_6_1.fastq.gz \
+                  --pe1-2 s_6_2.fastq.gz \
+                  -t 4 -o output
+```
+
+-t is the number of threads. Change this according to how many threads you are able to use.
+
+*Note: the analysis of this files may take a while. For instance, it took 100 minutes to complete using 4 threads on a Ubuntu 14.04.3 LTS with an Intel(R) Core(TM) i5 @ 2.20GHz processor, 16GB of RAM and SSD disk.*
+
 ## Extra
 
 Great [tutorial](https://wikis.utexas.edu/display/bioiteam/Mapping+with+bowtie2+Tutorial?preview=/66698154/67961035/Barrick_IntroToReadMapping_GVA14.pdf) on sequence alignment and the tools we went over above 
