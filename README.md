@@ -157,13 +157,12 @@ ii. Then move that file to this directory
 iii. unzip it and move to the metaphlan2 directory.
 ```bash
 unzip db_v20.zip
-mv  db_v20/ metaphlan2/```
+mv  db_v20/ metaphlan2/
 ```
 
 d. Run metaphlan
 ```bash
-metaphlan2.py \
-               mock_community/insub732_2_R1.fastq.gz,mock_community/insub732_2_R2.fastq.gz \
+metaphlan2.py mock_community/insub732_2_R1.fastq.gz,mock_community/insub732_2_R2.fastq.gz \
                --bowtie2out subset_in745.bowtie2.bz2 \
                --mpa_pkl metaphlan2/db_v20/mpa_v20_m200.pkl \
                --bowtie2db metaphlan2/db_v20/mpa_v20_m200 \
