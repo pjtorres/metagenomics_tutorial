@@ -5,7 +5,7 @@ cd metagenomics_tutorial
 python setup.py
 ```
 
-# -------------------------------------------------------------------------------------------------------------------------------------
+# ---
 DNA sequencing has revolutionized microbial ecology. There are two orthogonal approaches commonly used to explore the microbial universe: amplicon where a part of a single gene (usually the 16S rRNA gene) is amplified and sequenced and untargeted (“shotgun”) sequencing of all (“meta”) microbial genomes (“genomics”) where all the DNA is extracted and sequenced. 
 
 16S rRNA | Pro | Con | Shotgun Metagenomics | Pro | Con
