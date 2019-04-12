@@ -5,7 +5,7 @@ MAINTAINER Pedro J. Torres
 
 #-------- Installing wget to be able to download the fastp QC program -------------
 RUN apt update && \
-	apt-get install -y build-essential wget unzip  git awscli curl
+	apt-get install -y build-essential wget unzip  git awscli curl gzip
 
 #----- Installing diamond software: --------------
 # 1. wget http://opengene.org/fastp/fastp the program
