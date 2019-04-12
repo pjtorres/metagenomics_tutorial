@@ -136,7 +136,7 @@ a. Once again let us use a someone elses docker image :)
 ```bash
 docker pull qhmu/metaphlan2
 ```
-This time I will show you how you can go inside of the docker container so that we do not have to type ```docker run -v `pwd`:`pwd` -w `pwd` ``` everytime you want to run something. 
+b. This time I will show you how you can go inside of the docker container so that we do not have to type ```docker run -v `pwd`:`pwd` -w `pwd` ``` everytime you want to run something. 
 
 ```bash
 sudo docker run -v `pwd`:`pwd` -w `pwd` -it  qhmu/metaphlan2-docker:latest 
@@ -148,10 +148,19 @@ You should see something like ```root@af273de96f4a:/home/ubuntu#``` . This means
 
 Type ```metaphlan2.py``` to test it.
 
-Now in the interest of time. I have built and formated the metaphlan2 database. Jsut downlaod it.
+c. Now in the interest of time. I have built and formated the metaphlan2 database. 
+i. Download it form here:
+```https://drive.google.com/drive/u/0/folders/1eWR6tgUoAUNXWsFujyLU5VNUzNMfxhDm```
+ii. Then move that file to this directory
+```mv db_v20.zip metagenomics_tutorial/```
 
-```wget https://drive.google.com/open?id=1iDAIaZuzefUisO1CAJ-_cBgpIiTgapEt```
-Run with paired end reads
+iii. unzip it and move to the metaphlan2 directory.
+```bash
+unzip db_v20.zip
+mv  db_v20/ metaphlan2/```
+```
+
+d. Run metaphlan
 ```bash
 metaphlan2.py \
                mock_community/insub732_2_R1.fastq.gz,mock_community/insub732_2_R2.fastq.gz \
@@ -161,6 +170,8 @@ metaphlan2.py \
                --input_type fastq --nproc 8 > 3_Taxa/in745.Taxa.txt
 ```
 
+e. Now lets take a look at what we have created!
+```head 3_Taxa/in745.Taxa.txt ```
 
 ## Extra
 What is Docker ?
