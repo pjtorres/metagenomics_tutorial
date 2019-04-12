@@ -60,7 +60,7 @@ docker run -v `pwd`:`pwd` -w `pwd` metagenomics fastp \
      -O 1_QC/insub732_2_R2.fastp.fastq.gz \
      --detect_adapter_for_pe --length_required 60 --html 1_QC/insub732_2.fastp.html
 ```
-### 1. Remove host contamination 
+### 2. Remove host contamination 
 Removing host (contamination) sequences is important to analyze the renaming (non-host) sequences. This is important step needed especially if you are planning of building contigs or submitting human data to a public repository like the SRA. We will use a variety of popular tools to do this including bowtie2, samtools, and bedtools. **Big thank you to Bryan Ho for doing this**
 
 a. Someone already build the docker images yay! We can go ahead and pull the [bowtie2](https://hub.docker.com/r/biocontainers/bowtie2/), the [samtools](https://hub.docker.com/r/biocontainers/samtools/) and [bedtools](https://hub.docker.com/r/biocontainers/bedtools)pre-made image form the docker repository 
@@ -128,8 +128,8 @@ e. Se will now convert the bam file to fastq. bedtools bamtofastq is a conversio
 ```bash
 docker run -v `pwd`:`pwd` -w `pwd` biocontainers/bedtools:v2.25.0_cv3 bedtools bamtofastq -i 2_Decontam/insub732_NA_human_sorted.bam -fq 2_Decontam/insub732_R1_NA_human_sorted.fastq -fq2 2_Decontam/insub732_R2_NA_human_sorted.fastq 
 ```
+### 3. Taxonomic Classificaiton
 
-3. Taxonomic Classificaiton
 There are a number of classification progrmas out there: [centrifuge](https://ccb.jhu.edu/software/centrifuge/) [kraken](https://ccb.jhu.edu/software/kraken/), [kaiju](http://kaiju.binf.ku.dk/), [mOTU](https://omictools.com/motu-tool), [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi), [FOCUS](https://github.com/metageni/FOCUS) ... you get the picture. There are a lot! It is up to you to decide what works best for your given dataset. I am a fan of centrifuge, but there is alot of processing invovled in order to make it human readable. For the sake of this tutorial I will use [metaphlan2](https://bitbucket.org/biobakery/metaphlan2). T
 
 a. Once again let us use a someone elses docker image :)
