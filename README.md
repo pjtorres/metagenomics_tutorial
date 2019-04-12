@@ -156,6 +156,7 @@ ii. Then move that file to this directory
 
 iii. unzip it and move to the metaphlan2 directory.
 ```bash
+mkdir metaphlan2
 unzip db_v20.zip
 mv  db_v20/ metaphlan2/
 ```
