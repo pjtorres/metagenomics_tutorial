@@ -22,6 +22,8 @@ There are a number of public resources for microbiome bioinformatics benchmarkin
 # Shotgun Metagenomic Basic Workflow
 ```bash
 git clone https://github.com/pjtorres/metagenomics_tutorial.git
+
+python setup.py
 ```
 
 ### 1. Quality Control
