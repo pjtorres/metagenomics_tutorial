@@ -1,3 +1,4 @@
+https://drive.google.com/file/d/1iDAIaZuzefUisO1CAJ-_cBgpIiTgapEt/view?usp=sharing
 Before getting started make sure you have cloned this repository and you are in the meategomics_tutorial directory. Then run setup.py and start downloading the metaphlan reference database [here](https://drive.google.com/drive/u/0/folders/1eWR6tgUoAUNXWsFujyLU5VNUzNMfxhDm)
 ```bash
 git clone https://github.com/pjtorres/metagenomics_tutorial.git
