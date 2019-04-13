@@ -3,7 +3,6 @@ Before getting started make sure you have cloned this repository and you are in 
 ```bash
 git clone https://github.com/pjtorres/metagenomics_tutorial.git
 cd metagenomics_tutorial
-python setup.py
 ```
 [Start Here](https://github.com/pjtorres/metagenomics_tutorial/blob/master/Docker.md)
 
