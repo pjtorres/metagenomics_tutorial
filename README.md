@@ -1,4 +1,4 @@
-Before getting started make sure you have cloned this repository and you are in the meategomics_tutorial directory. Start downloading the metaphlan reference database [here](https://drive.google.com/file/d/1iDAIaZuzefUisO1CAJ-_cBgpIiTgapEt/view?usp=sharing)
+Before getting started make sure you have cloned this repository and you are in the meategomics_tutorial directory. Start download the metaphlan reference database [here](https://drive.google.com/file/d/1iDAIaZuzefUisO1CAJ-_cBgpIiTgapEt/view?usp=sharing)
 
 ```bash
 git clone https://github.com/pjtorres/metagenomics_tutorial.git
