@@ -1,3 +1,6 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10265122.svg)](https://doi.org/10.5281/zenodo.10265122)
+
+
 Before getting started make sure you have cloned this repository and you are in the meategomics_tutorial directory. 
 
 Start downloading the metaphlan reference database [here](https://drive.google.com/file/d/1iDAIaZuzefUisO1CAJ-_cBgpIiTgapEt/view?usp=sharing)
