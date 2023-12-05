@@ -187,14 +187,20 @@ Type ```metaphlan2.py``` to test it.
 c. Now in the interest of time. I have built and formatted the metaphlan2 database. 
 
 i. Download it form here:
-```https://drive.google.com/drive/u/0/folders/1eWR6tgUoAUNXWsFujyLU5VNUzNMfxhDm```
+```
+http://cmprod1.cibio.unitn.it/databases/MetaPhlAn/metaphlan_databases/
 
-ii. Then move that file to this directory
-```mv db_v20.zip metagenomics_tutorial/```
+# Do the following
+ wget http://cmprod1.cibio.unitn.it/databases/MetaPhlAn/metaphlan_databases/mpa_v20_m200.tar .
+```
 
-iii. unzip it and move to the metaphlan2 directory.
+ii. Then move that tar file to this directory
+```mv mpa_v20_m200.tar  metagenomics_tutorial/```
+
+iii. Open tar it and move to the metaphlan2 directory.
 ```bash
-unzip db_v20.zip
+mkdir db_v20/
+tar xvf  mpa_v20_m200.tar -C db_v20/
 mv  db_v20/ metaphlan2/
 ```
 
